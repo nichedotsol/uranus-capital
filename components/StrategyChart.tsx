@@ -103,8 +103,10 @@ export default function StrategyChart({ data }: StrategyChartProps) {
           fill="#ffd700"
           name="acquisitionAmount"
           shape={(props: any) => {
-            // Only render if there's an acquisition
-            if (!props.payload?.acquisitionAmountValue) return null;
+            // Only render if there's an acquisition, otherwise return empty element
+            if (!props.payload?.acquisitionAmountValue) {
+              return <g />;
+            }
             return (
               <g>
                 <circle 
