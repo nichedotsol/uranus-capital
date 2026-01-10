@@ -74,38 +74,38 @@ export default function StrategyChart({ data }: StrategyChartProps) {
         />
         
         <Legend 
-          wrapperStyle={{ paddingTop: 20, paddingBottom: 10 }}
+          wrapperStyle={{ paddingTop: 20, paddingBottom: 10, color: "#ffffff" }}
           iconType="line"
           align="right"
           verticalAlign="bottom"
           formatter={(value) => {
             if (value === "marketPrice") return "URANUS PRICE";
-            if (value === "acquisitionAmount") return "ACQUISITIONS";
+            if (value === "acquisitionAmount") return "URANUS CAPITAL ACQUISITIONS";
             return value.toUpperCase();
           }}
           iconSize={16}
         />
         
-        {/* URANUS Price Line - Orange like MicroStrategy's BTC price */}
+        {/* URANUS Price Line - White */}
         <Line 
           type="monotone" 
           dataKey="marketPrice" 
-          stroke="#ff6b35"
+          stroke="#ffffff"
           strokeWidth={2.5}
           dot={false}
-          activeDot={{ r: 6, fill: "#ff6b35", stroke: "#000", strokeWidth: 2 }}
+          activeDot={{ r: 6, fill: "#ffffff", stroke: "#000", strokeWidth: 2 }}
           name="marketPrice"
         />
         
-        {/* Acquisition Markers - Yellow/Gold circles on the price line (like MicroStrategy) */}
+        {/* Acquisition Markers - Cyan circles on the price line */}
         <Scatter 
           dataKey="acquisitionAmount" 
-          fill="#ffd700"
+          fill="#70E3F8"
           name="acquisitionAmount"
-          shape={(props: any) => {
-            // Only render if there's an acquisition, otherwise return empty element
+          shape={((props: any) => {
+            // Only render if there's an acquisition
             if (!props.payload?.acquisitionAmountValue) {
-              return <g />;
+              return null;
             }
             return (
               <g>
@@ -113,13 +113,13 @@ export default function StrategyChart({ data }: StrategyChartProps) {
                   cx={props.cx} 
                   cy={props.cy} 
                   r={7} 
-                  fill="#ffd700" 
+                  fill="#70E3F8" 
                   stroke="#000" 
                   strokeWidth={1.5}
                 />
               </g>
             );
-          }}
+          }) as any}
         />
       </LineChart>
     </ResponsiveContainer>
