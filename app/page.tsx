@@ -29,11 +29,13 @@ export default async function Home() {
   // Calculate Market Cap: Price * Supply
   const calculatedMarketCap = currentPrice * URANUS_SUPPLY;
   
-  const totalHeld = TREASURY_BUYS.reduce((acc, curr) => acc + curr.amount, 0);
-  const totalCost = TREASURY_BUYS.reduce((acc, curr) => acc + (curr.amount * curr.price), 0);
-  const avgEntry = totalHeld > 0 ? totalCost / totalHeld : 0;
-  const currentValue = totalHeld * currentPrice;
-  const multiplier = avgEntry > 0 ? currentPrice / avgEntry : 0;
+  // Portfolio calculations - explicitly handle empty acquisitions
+  const hasAcquisitions = TREASURY_BUYS.length > 0;
+  const totalHeld = hasAcquisitions ? TREASURY_BUYS.reduce((acc, curr) => acc + curr.amount, 0) : 0;
+  const totalCost = hasAcquisitions ? TREASURY_BUYS.reduce((acc, curr) => acc + (curr.amount * curr.price), 0) : 0;
+  const avgEntry = hasAcquisitions && totalHeld > 0 ? totalCost / totalHeld : 0;
+  const currentValue = hasAcquisitions ? totalHeld * currentPrice : 0;
+  const multiplier = hasAcquisitions && avgEntry > 0 ? currentPrice / avgEntry : 0;
 
   return (
     <div className="relative min-h-screen font-sans text-white">
