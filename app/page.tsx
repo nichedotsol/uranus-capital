@@ -4,7 +4,7 @@ import Ticker from "@/components/Ticker";
 import { TREASURY_BUYS, getCombinedChartData } from "@/lib/uranus-data";
 import { URANUS_SUPPLY, URANUS_CA } from "@/lib/constants";
 import type { DexScreenerPair } from "@/lib/types";
-import { Sparkles, ArrowUpRight, TrendingUp, DollarSign } from "lucide-react";
+import { ArrowUpRight, TrendingUp, DollarSign } from "lucide-react";
 import Image from "next/image";
 
 // Fetch Live Price
@@ -67,9 +67,6 @@ export default async function Home() {
         {/* HERO SECTION */}
         <header className="relative py-6 md:py-10 flex flex-col md:flex-row justify-between items-end">
           <div className="relative">
-            <div className="absolute -top-6 -left-6 text-white opacity-80 animate-pulse">
-                <Sparkles className="w-10 h-10 icon-glow" strokeWidth={1.5} />
-            </div>
             <div className="relative w-full max-w-[400px] md:max-w-[500px] h-auto -ml-2">
               <Image 
                 src="/uranuscap2.png"
