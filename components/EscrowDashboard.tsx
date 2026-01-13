@@ -56,7 +56,7 @@ export default function EscrowDashboard({ locks }: EscrowDashboardProps) {
                 {/* Jupiter Lock */}
                 <div>
                   <a
-                    href={`https://solscan.io/tx/${lock.jupiterLock}`}
+                    href={`https://solscan.io/account/${lock.jupiterLock}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm text-[#70E3F8] hover:text-[#70E3F8]/80 transition-colors group"
