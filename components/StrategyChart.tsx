@@ -136,7 +136,7 @@ export default function StrategyChart({ data }: StrategyChartProps) {
           fill="#70E3F8"
           name="acquisitionAmount"
           data={acquisitionPoints}
-          shape={() => null}
+          shape={() => <g />}
         />
       </LineChart>
     </ResponsiveContainer>
