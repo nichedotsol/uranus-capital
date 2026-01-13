@@ -28,9 +28,22 @@ export default function StrategyChart({ data }: StrategyChartProps) {
     console.log('Acquisition points found:', acquisitionPoints);
   }
 
+  // Calculate date range to ensure X-axis includes all dates
+  const dates = data.map(d => d.date).sort();
+  const minDate = dates[0];
+  const maxDate = dates[dates.length - 1];
+  console.log('Date range:', {
+    min: minDate,
+    max: maxDate,
+    dataLength: data.length
+  });
+
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+      <LineChart 
+        data={data} 
+        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+      >
         <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />
         
         <XAxis 
@@ -43,6 +56,7 @@ export default function StrategyChart({ data }: StrategyChartProps) {
              try { return format(new Date(str), "MMM yyyy") } catch { return "" }
           }}
           minTickGap={60}
+          domain={[minDate, maxDate]}
         />
         
         {/* Single Y-Axis for Price */}
