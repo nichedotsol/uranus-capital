@@ -46,3 +46,9 @@ export interface StockMarketCap {
   name: string;
   marketCap: number;
 }
+
+export interface EscrowLock {
+  date: string;
+  amount: number;
+  jupiterLock: string; // Transaction signature/link
+}

@@ -1,11 +1,13 @@
 import StrategyChart from "@/components/StrategyChart";
 import MarketCapComp from "@/components/MarketCapComp";
 import Ticker from "@/components/Ticker";
+import EscrowDashboard from "@/components/EscrowDashboard";
 import { TREASURY_BUYS, getCombinedChartData } from "@/lib/uranus-data";
 import { URANUS_SUPPLY, URANUS_CA } from "@/lib/constants";
-import type { DexScreenerPair } from "@/lib/types";
+import type { DexScreenerPair, EscrowLock } from "@/lib/types";
 import { ArrowUpRight, TrendingUp, DollarSign } from "lucide-react";
 import Image from "next/image";
+import escrowLocksData from "../data/escrow-locks.json";
 
 // Fetch Live Price
 async function getLivePrice(): Promise<DexScreenerPair | null> {
@@ -36,6 +38,9 @@ export default async function Home() {
   const avgEntry = hasAcquisitions && totalHeld > 0 ? totalCost / totalHeld : 0;
   const currentValue = hasAcquisitions ? totalHeld * currentPrice : 0;
   const multiplier = hasAcquisitions && avgEntry > 0 ? currentPrice / avgEntry : 0;
+
+  // Load escrow locks
+  const escrowLocks: EscrowLock[] = escrowLocksData as EscrowLock[];
 
   return (
     <div className="relative min-h-screen font-sans text-white">
@@ -177,6 +182,9 @@ export default async function Home() {
 
           </div>
         </div>
+
+        {/* Escrow Dashboard */}
+        <EscrowDashboard locks={escrowLocks} />
       </main>
     </div>
   );
