@@ -109,10 +109,25 @@ export default function StrategyChart({ data }: StrategyChartProps) {
           fill="#70E3F8"
           name="acquisitionAmount"
           shape={((props: any) => {
+            // Debug: Log when shape function is called
+            console.log('Scatter shape called:', {
+              cx: props.cx,
+              cy: props.cy,
+              payload: props.payload,
+              hasValue: !!props.payload?.acquisitionAmountValue
+            });
+            
             // Only render if there's an acquisition
             if (!props.payload?.acquisitionAmountValue) {
               return null;
             }
+            
+            // Ensure we have valid coordinates
+            if (props.cx == null || props.cy == null) {
+              console.warn('Scatter: Missing coordinates', props);
+              return null;
+            }
+            
             return (
               <g>
                 <circle 
