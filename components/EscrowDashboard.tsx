@@ -11,7 +11,7 @@ export default function EscrowDashboard({ locks }: EscrowDashboardProps) {
   if (!locks || locks.length === 0) {
     return (
       <div className="glass-card p-8">
-        <h3 className="text-lg font-medium text-white mb-4">Tokens Locked in Escrow</h3>
+        <h3 className="text-lg font-medium text-white mb-4">LOCKED URANUS</h3>
         <p className="text-sm text-[#a1a1aa]">No escrow locks currently active.</p>
       </div>
     );
@@ -19,7 +19,7 @@ export default function EscrowDashboard({ locks }: EscrowDashboardProps) {
 
   return (
     <div className="glass-card p-8">
-      <h3 className="text-lg font-medium text-white mb-6">Tokens Locked in Escrow</h3>
+      <h3 className="text-lg font-medium text-white mb-6">LOCKED URANUS</h3>
       
       <div className="overflow-x-auto">
         <div className="min-w-full">
@@ -45,7 +45,7 @@ export default function EscrowDashboard({ locks }: EscrowDashboardProps) {
               >
                 {/* Acquisition Date */}
                 <div className="text-sm font-mono text-white">
-                  {format(new Date(lock.date), "MMM d, yyyy")}
+                  {format(new Date(lock.date + 'T00:00:00'), "MMM d, yyyy")}
                 </div>
 
                 {/* Amount */}
