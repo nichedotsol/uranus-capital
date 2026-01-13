@@ -22,6 +22,12 @@ export default function StrategyChart({ data }: StrategyChartProps) {
     );
   }
 
+  // Debug: Log data points with acquisitions
+  const acquisitionPoints = data.filter(d => d.acquisitionAmount !== undefined && d.acquisitionAmountValue !== undefined);
+  if (acquisitionPoints.length > 0) {
+    console.log('Acquisition points found:', acquisitionPoints);
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
