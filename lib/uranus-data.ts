@@ -83,6 +83,29 @@ export async function getCombinedChartData(): Promise<ChartDataPoint[]> {
       };
     }).reverse();
 
+    // Add acquisitions that don't have matching chart data points
+    // Use the acquisition price as the market price for positioning
+    const existingDates = new Set(formattedData.map(d => d.date));
+    const unmatchedAcquisitions = TREASURY_BUYS.filter(b => !existingDates.has(b.date));
+    
+    if (unmatchedAcquisitions.length > 0) {
+      const additionalDataPoints: ChartDataPoint[] = unmatchedAcquisitions.map(b => ({
+        date: b.date,
+        marketPrice: b.price, // Use acquisition price as market price for positioning
+        buyPrice: b.price,
+        amount: b.amount,
+        acquisitionAmount: b.price, // Y position (on the price line at acquisition price)
+        acquisitionAmountValue: b.amount // Actual amount for tooltip
+      }));
+
+      // Combine and sort by date
+      const allData = [...formattedData, ...additionalDataPoints].sort((a, b) => 
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+
+      return allData;
+    }
+
     return formattedData;
   } catch (e) {
     console.error("Chart Data Error:", e);
