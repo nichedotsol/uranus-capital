@@ -1,6 +1,6 @@
 "use client";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Scatter, Legend
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Scatter, Legend, ReferenceDot
 } from "recharts";
 import { format } from "date-fns";
 import type { ChartDataPoint } from "@/lib/types";
@@ -118,43 +118,25 @@ export default function StrategyChart({ data }: StrategyChartProps) {
         />
         
         {/* Acquisition Markers - Cyan circles on the price line */}
+        {acquisitionPoints.map((point, index) => (
+          <ReferenceDot
+            key={`acquisition-${index}`}
+            x={point.date}
+            y={point.acquisitionAmount}
+            r={7}
+            fill="#70E3F8"
+            stroke="#000"
+            strokeWidth={1.5}
+          />
+        ))}
+        
+        {/* Keep Scatter for legend */}
         <Scatter 
           dataKey="acquisitionAmount" 
           fill="#70E3F8"
           name="acquisitionAmount"
-          shape={((props: any) => {
-            // Debug: Log when shape function is called
-            console.log('Scatter shape called:', {
-              cx: props.cx,
-              cy: props.cy,
-              payload: props.payload,
-              hasValue: !!props.payload?.acquisitionAmountValue
-            });
-            
-            // Only render if there's an acquisition
-            if (!props.payload?.acquisitionAmountValue) {
-              return null;
-            }
-            
-            // Ensure we have valid coordinates
-            if (props.cx == null || props.cy == null) {
-              console.warn('Scatter: Missing coordinates', props);
-              return null;
-            }
-            
-            return (
-              <g>
-                <circle 
-                  cx={props.cx} 
-                  cy={props.cy} 
-                  r={7} 
-                  fill="#70E3F8" 
-                  stroke="#000" 
-                  strokeWidth={1.5}
-                />
-              </g>
-            );
-          }) as any}
+          data={acquisitionPoints}
+          shape={() => null}
         />
       </LineChart>
     </ResponsiveContainer>
